@@ -1,16 +1,13 @@
-require 'scraper.rb'
+require '../team_scraper.rb'
 require 'open-uri'
-describe FRCInfoRequest, "A request" do
+describe TeamInfoRequest, "A request for team information" do
   @@team_stats = Array['38', '2188', '11', '48.00', '12.00','4.00']
-#  @@team_stats = Array.new(['38', '2188', '11', '48.00', '12.00', '4.00'])
-  request = FRCInfoRequest.new
+  request = TeamInfoRequest.new
   
   request.setUrl("http://www2.usfirst.org/2010comp/Events/GT/rankings.html")
 
   request.downloadData
-  request.limitData
-# complete_stats = request.describeStats
-#  @@parsed_stats = complete_stats.scan(/>(.+)</)
+  request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
 #----------------------------------------------------------------------------
   # I know this test sucks, but I don't want to hard code the HTML into this file. So there.
   it "should not have an empty URL" do  

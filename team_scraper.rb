@@ -1,44 +1,20 @@
-require 'open-uri'
-class FRCInfoRequest
-  # instance variables
-  @data 
-  @stats
-  @url
-
+require File.expand_path(File.dirname(__FILE__) + '/frc_scraper.rb')
+class TeamInfoRequest < FRCInfoRequest
   # global variables
   @@number_of_fields = 6   # a field would be rank, team #, seeding pts, etc.
-
-#=====================================================================
-  # Data
-#=====================================================================
-  def downloadData
-    @data = open(@url)
-  end
- 
-  def limitData
-    text = @data.read; nil
-    start = text.index('<TR style="background-color:#FFFFFF;" >')
-    stop = text.index( '</table>', start)
-    restricted_text = text[start..stop]
-    nested_stats = restricted_text.scan(/>(.+)</)
-    # important line - removes nested arrays
-    @stats = nested_stats.flatten
-  end
-
-#======================================================================  
-  # URL
-#======================================================================
-  def getUrl
-    return @url
-  end
-
-  def setUrl(url)
-    @url = url
-  end
 
 #======================================================================
   # Stats
 #======================================================================
+  def getStatsByRank
+    return cycleThroughStats(0, rank)
+  end
+
+  def getStatsByTeamNumber
+    return cycleThroughStats(1, rank)
+  end
+
+# debugging purposes only
   def displayStatsByRank(rank)
     return cycleThroughStats(0, rank)
   end
@@ -63,15 +39,11 @@ class FRCInfoRequest
     puts "=".center(40, '=')
   end
 
-  def putsNoF
-    return @@number_of_fields
-  end
-
 #=====================================================================
   # Private
 #=====================================================================
   def getNumberOfTeams
-    number_of_teams = @stats.length / @@number_of_fields 
+    number_of_teams = @@stats.length / @@number_of_fields 
     return number_of_teams
   end
 
@@ -81,10 +53,10 @@ class FRCInfoRequest
   def cycleThroughStats(field_number, line_value)
     amount_of_cycles = getNumberOfTeams
     start = 0  
-    stop= @@number_of_fields - 1
+    stop = @@number_of_fields - 1
     counter = 1 
     while counter <= amount_of_cycles
-      team_stats = @stats[start..stop]
+      team_stats = @@stats[start..stop]
       
       if line_value.to_s == team_stats[field_number]
         return team_stats
