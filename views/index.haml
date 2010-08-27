@@ -1,2 +1,5 @@
-%select 
-  %option= @event_url
+%form{:name => 'event_form'}
+  %select{:name => 'combobox'}
+    - @event_names.each do |e|
+      %option{:value => @event_urls[@event_names.index(e)]}= e
+  %input{:type => 'button', :value => 'Go', :onclick => 'location=document.event_form.combobox.options[document.event_form.combobox.selectedIndex].value'}

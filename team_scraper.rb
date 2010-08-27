@@ -6,37 +6,12 @@ class TeamInfoRequest < FRCInfoRequest
 #======================================================================
   # Stats
 #======================================================================
-  def getStatsByRank
+  def getStatsByRank(rank)
     return cycleThroughStats(0, rank)
   end
 
-  def getStatsByTeamNumber
-    return cycleThroughStats(1, rank)
-  end
-
-# debugging purposes only
-  def displayStatsByRank(rank)
-    return cycleThroughStats(0, rank)
-  end
-
-  def displayStatsByTeamNumber(number)
-   return cycleThroughStats(1, number)
-  end
-
-#=====================================================================
-  # Printing
-#=====================================================================
-  def printTeamStats(team_stats)
-    puts "\n"
-    puts " Team Stats ".center(40, '=')
-
-    puts " Rank: #{team_stats[0].center(20)}"
-    puts " Team Number: #{team_stats[1].center(20)}"
-    puts " Matches Played: #{team_stats[2].center(20)}"
-    puts " Seeding Points: #{team_stats[3].center(20)}"
-    puts " Coopertition Bonus: #{team_stats[4]}"
-    puts " Hanging Points: #{team_stats[5]}"
-    puts "=".center(40, '=')
+  def getStatsByTeamNumber(number)
+    return cycleThroughStats(1, number)
   end
 
 #=====================================================================
@@ -51,15 +26,15 @@ class TeamInfoRequest < FRCInfoRequest
   # is the same as the same as the value in array[field_number] then it
   # returns the stats.
   def cycleThroughStats(field_number, line_value)
-    amount_of_cycles = getNumberOfTeams
+    getNumberOfTeams
     start = 0  
     stop = @@number_of_fields - 1
     counter = 1 
-    while counter <= amount_of_cycles
+    while counter <= getNumberOfTeams
       team_stats = @@stats[start..stop]
       
       if line_value.to_s == team_stats[field_number]
-        return team_stats
+        return team_stats.flatten
       end
       
       start += @@number_of_fields
@@ -67,7 +42,7 @@ class TeamInfoRequest < FRCInfoRequest
       counter +=  1 
     end 
     # yeah, probably need to handle not finding the value better
-    return team_stats
+    return team_stats.flatten
   end
 #=====================================================================
   private :getNumberOfTeams
