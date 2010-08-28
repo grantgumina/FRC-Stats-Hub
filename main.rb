@@ -24,41 +24,57 @@ end
 
 
 helpers do 
-  def create_event_urls
+  def create_event_urls(event_short_names)
     base_url = '/event/'
     
-    request = EventListInfoRequest.new('http://www.thebluealliance.net/tbatv/')
-    results = request.findData('<tr class="table_row0">', '</table>', /event\/(.*?)"/)
-    results.map! do |r|
+    event_short_names.map! do |r|
       r.scan(/2010(.+)/)
     end
 
-    results.map! do |r|
+    event_short_names.map! do |r|
       r = base_url + r.to_s
     end
-    return results
+    return event_short_names
   end
 
-  def create_team_urls
+  def create_team_urls(event, team_numbers)
     base_url = '/team/'
+    team_numbers.map! do |tn|
+      tn = base_url + tn.to_s
+    end
   end
 end
 
 class EventUrl < ActiveRecord::Base
 end
 
-get '/' do
-  req = EventListInfoRequest.new('http://www.thebluealliance.net/tbatv/')
-  @event_names = req.findData('<tr class="table_row0">', '</table>', /title="(.*?)"/)
 
-  @event_urls = create_event_urls
+get '/' do
+  @event_short_names = []
+  @event_names = []
+  t1 = Thread.new do
+  req = EventListInfoRequest.new('http://www.thebluealliance.net/tbatv/')
+    @event_names = req.findData('<tr class="table_row0">', '</table>', /title="(.*?)"/)
+  end
+
+  t2 = Thread.new do
+  req = EventListInfoRequest.new('http://www.thebluealliance.net/tbatv/')
+    @event_short_names = req.findData('<tr class="table_row0">', '</table>', /event\/(.*?)"/)
+  end
+
+  t1.join
+  t2.join
+  @event_urls = create_event_urls(@event_short_names)
   haml :index
 end
 
-get '/event/:short_name' do |n|
+get '/event/:short_name' do |event|
+  request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{event}&year=2010&event_type=FRC")
+  @team_numbers = request.findData('<tr bgcolor="#FFFFFF">', '</table>', /">(.+)<\/a/)
+  @team_urls = create_team_urls(event, @team_numbers)
   haml :event
 end
 
-get '/event/:short_name/team/:team_number' do |tn|
-
+get '/event/:short_name/team/:team_number' do 
+  haml :team
 end

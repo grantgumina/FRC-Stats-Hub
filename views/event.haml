@@ -1,6 +1,7 @@
 %form{:name => 'team_form'}
   %input{:type => 'textbox', :name => 'searchbox', :value => 'Enter team number', :onfocus => 'this.value = ""', :onblur => 'this.value = "Enter team number"'}
   %select{:name => 'combobox'}
-    %option{:value => 'foobar'}= "lolz"
+    - @team_numbers.each do |i|
+      %option{:value => @team_urls[@team_numbers.index(i)]}= "lolz"
   %input{:type => 'button', :value => 'Go', :onclick => 'location=document.event_form.combobox.options[document.event_form.combobox.selectedIndex].value'}
 
