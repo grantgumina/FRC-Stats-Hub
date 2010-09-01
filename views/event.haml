@@ -1,7 +1,47 @@
-%form{:name => 'team_form'}
-  %input{:type => 'textbox', :name => 'searchbox', :value => 'Enter team number', :onfocus => 'this.value = ""', :onblur => 'this.value = "Enter team number"'}
-  %select{:name => 'combobox'}
-    - @team_numbers.each do |i|
-      %option{:value => @team_urls[@team_numbers.index(i)]}= "lolz"
-  %input{:type => 'button', :value => 'Go', :onclick => 'location=document.event_form.combobox.options[document.event_form.combobox.selectedIndex].value'}
+:javascript
+  $(document).ready(function () {
+    $('.error').hide();
 
+    $('#team_number_box').focus(function () {
+      $(this).val('');
+      $('#team_number_combobox').val('Select...');
+    });
+
+    $('#team_number_box').blur(function () {
+      if($(this).val() == '') {
+        $(this).val('Enter team number');
+        $('#team_number_combobox').val('Select...');
+      }
+    });
+
+    $('#team_number_combobox').change(function () {
+      $('#team_number_box').val('Enter team number');
+    });
+
+    $('#team_number_combobox').blur(function () {
+      $('#team_number_box').val('Enter team number');
+    });
+
+    $('#team_number_button').bind('click', function () {
+      var team_url;
+      if ($('#team_number_box').val() != 'Enter team number') {
+        team_url = document.location.pathname + '/team/' + document.team_form.team_number_box.value;
+      }
+      else if ($('#team_number_combobox').val() != 'Select...') {
+        team_url = document.location.pathname + '/team/' + $('#team_number_combobox option:selected').text();
+      }
+      document.location.href = team_url;
+    });
+  });
+
+%h3= @event
+.error Please enter a team number.
+%form{:name => 'team_form'}
+  %input{:type => 'textbox', :id => 'team_number_box', :value => 'Enter team number'}
+  or
+  %select{:id => 'team_number_combobox'}
+    %option Select...
+    - @team_numbers.sort!
+    - @team_numbers.each do |i|
+      %option= i
+  %input{:id => 'team_number_button', :type => 'button', :value => 'Go'}

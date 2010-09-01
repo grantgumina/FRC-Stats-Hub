@@ -3,25 +3,7 @@ require 'sinatra'
 require 'frc_scraper.rb'
 require 'event_list_scraper.rb'
 require 'team_scraper.rb'
-require 'active_record'
-
-ActiveRecord::Base.establish_connection(
-  :adapter => 'sqlite3', :database => 'db/event_info.sqlite3.db'
-)
-
-begin
-ActiveRecord::Migration.class_eval do
-  create_table :event_urls do |t|
-    t.primary_key :id
-    t.string :event_short_hand_name
-    t.string :event_name
-   end
-end
-
-rescue
-  #nothing - table has already been created
-end
-
+require 'team_list_scraper.rb'
 
 helpers do 
   def create_event_urls(event_short_names)
@@ -39,15 +21,12 @@ helpers do
 
   def create_team_urls(event, team_numbers)
     base_url = '/team/'
-    team_numbers.map! do |tn|
+    team_urls = team_numbers.map do |tn|
       tn = base_url + tn.to_s
     end
+    return team_urls
   end
 end
-
-class EventUrl < ActiveRecord::Base
-end
-
 
 get '/' do
   @event_short_names = []
@@ -68,10 +47,13 @@ get '/' do
   haml :index
 end
 
-get '/event/:short_name' do |event|
-  request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{event}&year=2010&event_type=FRC")
+get '/event/:short_name' do |@event|
+  request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{@event}&year=2010&event_type=FRC")
   @team_numbers = request.findData('<tr bgcolor="#FFFFFF">', '</table>', /">(.+)<\/a/)
-  @team_urls = create_team_urls(event, @team_numbers)
+  @team_urls = create_team_urls(@event, @team_numbers)  
+  @team_numbers.map! do |x| 
+    x.to_i
+  end
   haml :event
 end
 
