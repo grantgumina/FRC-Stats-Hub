@@ -24,24 +24,32 @@
 
     $('#team_number_button').bind('click', function () {
       var team_url;
-      if ($('#team_number_box').val() != 'Enter team number') {
-        team_url = document.location.pathname + '/team/' + document.team_form.team_number_box.value;
+      if ($('#team_number_combobox').val() == 'Select...') {
+        team_url = document.location.pathname + '/team/' + $('#team_number_box').val();
+        alert(team_url);
       }
-      else if ($('#team_number_combobox').val() != 'Select...') {
+      else if ($('#team_number_box').val() == 'Enter team number') {
         team_url = document.location.pathname + '/team/' + $('#team_number_combobox option:selected').text();
       }
+      alert(team_url);
       document.location.href = team_url;
+    });
+
+    $('.pressable').keypress(function (e) {
+      var k = e.keyCode || e.which;
+      if(k == 13) {
+        $('#team_number_button').click();
+      }
     });
   });
 
 %h3= @event
 .error Please enter a team number.
-%form{:name => 'team_form'}
-  %input{:type => 'textbox', :id => 'team_number_box', :value => 'Enter team number'}
-  or
-  %select{:id => 'team_number_combobox'}
-    %option Select...
-    - @team_numbers.sort!
-    - @team_numbers.each do |i|
-      %option= i
-  %input{:id => 'team_number_button', :type => 'button', :value => 'Go'}
+%input{:type => 'textbox', :id => 'team_number_box', :value => 'Enter team number', :onkeydown => ''}
+or
+%select{:id => 'team_number_combobox', :class => 'pressable'}
+  %option Select...
+  - @team_numbers.sort!
+  - @team_numbers.each do |i|
+    %option= i
+%input{:id => 'team_number_button', :class => 'pressable', :type => 'button', :value => 'Go'}
