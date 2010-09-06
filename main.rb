@@ -31,20 +31,25 @@ end
 get '/' do
   @event_short_names = []
   @event_names = []
-  t1 = Thread.new do
-  req = EventListInfoRequest.new('http://www.thebluealliance.net/tbatv/')
-    @event_names = req.findData('<tr class="table_row0">', '</table>', /title="(.*?)"/)
-  end
+  begin
+    t1 = Thread.new do
+    req = EventListInfoRequest.new('http://www.thebluealliance.net/tbatv/')
+      @event_names = req.findData('<tr class="table_row0">', '</table>', /title="(.*?)"/)
+    end
 
-  t2 = Thread.new do
-  req = EventListInfoRequest.new('http://www.thebluealliance.net/tbatv/')
-    @event_short_names = req.findData('<tr class="table_row0">', '</table>', /event\/(.*?)"/)
-  end
+    t2 = Thread.new do
+    req = EventListInfoRequest.new('http://www.thebluealliance.net/tbatv/')
+      @event_short_names = req.findData('<tr class="table_row0">', '</table>', /event\/(.*?)"/)
+    end
 
-  t1.join
-  t2.join
-  @event_urls = create_event_urls(@event_short_names)
-  haml :index
+    t1.join
+    t2.join
+    @event_urls = create_event_urls(@event_short_names)
+    haml :index 
+
+  rescue
+    haml :error, :layout => false
+  end
 end
 
 get '/event/:short_name' do |@event|
@@ -57,6 +62,15 @@ get '/event/:short_name' do |@event|
   haml :event
 end
 
-get '/event/:short_name/team/:team_number' do 
+get '/event/:short_name/team/:team_number' do
+  request = TeamInfoRequest.new('http://www2.usfirst.org/2010comp/events/gt/rankings.html')
+  match_result_request = TeamInfoRequest.new('http://www2.usfirst.org/2010comp/events/GT/matchresults.html')
+  
+  match_result_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
+  request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
+
+  @team_stats = request.getStatsByRank(params[:team_number])
+  @team_match_results = match_result.getTeamMatchResults(params[:team_number])
+
   haml :team
 end

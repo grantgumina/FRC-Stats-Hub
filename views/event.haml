@@ -39,12 +39,10 @@
       var team_url;
       if ($('#team_number_combobox').val() == 'Select...') {
         team_url = document.location.pathname + '/team/' + $('#team_number_box').val();
-        alert(team_url);
       }
       else if ($('#team_number_box').val() == 'Enter team number') {
         team_url = document.location.pathname + '/team/' + $('#team_number_combobox option:selected').text();
       }
-      alert(team_url);
       document.location.href = team_url;
     });
 

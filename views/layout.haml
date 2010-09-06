@@ -1,10 +1,22 @@
 !!!
 %html
   %head
+    %link{:rel => 'stylesheet', :href => '/styles.css'}
     %script{:type => 'text/javascript', :src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'}
     %script{:type => 'text/javascript', :src => 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js'}
     %title COMETS Robotics Stats Hub
   %body
-    %h1 COMETS Robotics Stats Hub
-    #content
-      = yield
+    #header
+      %h1 COMETS
+      %h2 FIRST Robotics Competition Stats Hub
+    #wrapper
+      #sidebar
+        .content
+          %p Foobar
+
+      .top.shape
+      .error
+      .content.shape
+        =yield
+        %p Arcu rhoncus, integer placerat montes enim integer placerat urna aenean? Tristique aenean! Turpis, dapibus sagittis elit! Nec elementum urna pellentesque. Magnis tincidunt magna in? Diam a, vut adipiscing amet? Urna, pellentesque aenean? Sagittis nisi integer! Odio augue aliquam dis! Urna, lorem purus dignissim integer. Ultrices ultricies sit phasellus! Amet nunc et elit? Dignissim hac. Porttitor! Quis! Vut. Penatibus nisi vel tincidunt hac et, placerat, scelerisque, turpis magnis sed magna nisi amet in, aliquam nunc est, montes velit sit lacus tincidunt! Phasellus platea et nisi. Nisi. Pulvinar integer aliquam eu phasellus, lectus, porta, habitasse platea in. Tempor urna augue odio rhoncus. Scelerisque ut sit, eros! Lundium enim urna sagittis, parturient in, lacus vut magna lorem porttitor? Et placerat lorem auctor turpis.
+      .bottom.shape

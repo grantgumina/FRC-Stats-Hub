@@ -1,6 +1,23 @@
+:javascript
+  $(document).ready(function () {
+    $('.error').hide();
+
+    $('#event_go_button').bind('click', function () {
+      if ($('#event_combobox').val() == 'Select an event...') {
+        $('.error').show();
+      }
+      else {
+        window.location.href = document.event_form.event_combobox.options[document.event_form.event_combobox.selectedIndex].value;
+      }
+    });
+  });
+
+%h3 Welcome!
+.error Please select an event.
 %form{:name => 'event_form'}
-  %select{:name=> 'event_combobox'}
+  %select{:id=> 'event_combobox'}
+    %option Select an event...
     - @event_names.each do |e|
       %option{:value => @event_urls[@event_names.index(e)]}= e
-  %input{:type => 'button', :id => 'event_go_button', :value => 'Go', :onclick => 'window.location.href = document.event_form.event_combobox.options[document.event_form.event_combobox.selectedIndex].value;'}
+  %input{:type => 'button', :id => 'event_go_button', :value => 'Go'}
 
