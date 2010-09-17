@@ -27,9 +27,9 @@ body {
 }
 
 .content {
-  width: 620px;
+  width: 610px;
   min-height: 400px;
-  padding: 10px 0px 20px 20px;
+  padding: 10px 10px 20px 20px;
 }
 
 .content p {
@@ -42,6 +42,24 @@ body {
   -moz-border-radius-bottomright: 15px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+}
+
+table.pretty {
+  width: 580px;
+  border: #000 solid black;
+  font-family: Verdana;
+  font-size: 12px;
+}
+
+table.pretty th {
+  width 100px;
+  background-color: #99CCCC;
+  font-weight: bold;
+  color: #333;
+}
+
+table.pretty th.match, table.pretty th.score {
+  width: 70px;
 }
 
 #header {

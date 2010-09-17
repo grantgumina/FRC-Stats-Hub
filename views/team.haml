@@ -1,0 +1,41 @@
+%h2= "Team #: #{@team_number}"
+%hr
+%table.pretty
+  %tr
+    %td Team Rank:
+    %td= @team_stats[0]
+  %tr
+    %td Matches Played:
+    %td= @team_stats[2]
+  %tr
+    %td Seeding Score:
+    %td= @team_stats[3]
+  %tr
+    %td Coopertition Bonus:
+    %td= @team_stats[4]
+  %tr
+    %td Hanging Points:
+    %td= @team_stats[5]
+
+%h2 Match History
+%hr
+
+%p= @team_match_results.length
+%p= @team_match_results[0]
+
+- @team_match_results.each do |match_info|
+  - match_info.each do |m|
+    - m.to_a
+    %br
+    %table.pretty
+      %tr
+        %th.match Match #
+        %th Red Alliance
+        %th Blue Alliance
+        %th.score Score
+      %tr
+        %td= m[1]
+        %td= "#{m[2]}, #{m[3]}, #{m[4]}"
+        %td= "#{m[5]}, #{m[6]}, #{m[7]}"
+        %td= "#{m[8]} - #{m[9]}"
+

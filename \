@@ -4,12 +4,10 @@ class TeamInfoRequest < FRCInfoRequest
 #======================================================================
   # Stats
 #======================================================================
-  # TODO: figure out how to dynamically find the number of matches per team
-  
-  # def getMatchesPerTeam
-  #   number_of_cells = @stats.length
-  #   return matches_per_team = number_of_cells / 8
-  # end
+
+  def getNumberOfScheduledMatches
+
+  end
 
   def getStatsByRank(rank)
     rank = rank.to_i
@@ -21,16 +19,26 @@ class TeamInfoRequest < FRCInfoRequest
     return cycleThroughStats(1, number, 6)
   end
 
+
   def getTeamMatchResults(number)
     number = number.to_i
     all = []
-    all[0] = cycleThroughMatchResults(2, number, 10)
-    all[1] = cycleThroughMatchResults(3, number, 10)
-    all[2] = cycleThroughMatchResults(4, number, 10)
-    all[3] = cycleThroughMatchResults(5, number, 10)
-    all[4] = cycleThroughMatchResults(6, number, 10)
-    all[5] = cycleThroughMatchResults(7, number, 10)
 
+    # all[0] = cycleThroughMatchResults(2, number, 10)
+    # all[1] = cycleThroughMatchResults(3, number, 10)
+    # all[2] = cycleThroughMatchResults(4, number, 10)
+    # all[3] = cycleThroughMatchResults(5, number, 10)
+    # all[4] = cycleThroughMatchResults(6, number, 10)
+    # all[5] = cycleThroughMatchResults(7, number, 10)
+
+    # all[6] = cycleThroughMatchResults(7, number, 10)
+    # all[7] = cycleThroughMatchResults(7, number, 10)
+    # all[8] = cycleThroughMatchResults(7, number, 10)
+    # all[9] = cycleThroughMatchResults(7, number, 10)
+    # all[10] = cycleThroughMatchResults(7, number, 10)
+    # all[11] = cycleThroughMatchResults(7, number, 10)
+    # all[12] = cycleThroughMatchResults(7, number, 10)
+    
     return all
   end
 
@@ -55,8 +63,7 @@ class TeamInfoRequest < FRCInfoRequest
       team_stats = @stats[start..stop]
 
       if line_value.to_s == team_stats[field_number]
-        return team_stats    
-      end
+        return team_stats      end
 
       start += number_of_fields
       stop += number_of_fields
@@ -67,12 +74,13 @@ class TeamInfoRequest < FRCInfoRequest
   end
 
   def cycleThroughMatchResults(field_number, line_value, number_of_fields)
+
     rows = getNumberOfRows(number_of_fields)
     start = 0  
     stop = number_of_fields - 1
     counter = 1 
-    mini_counter = 1
     returned_stats = []
+
 
     while counter <= rows
       team_stats = @stats[start..stop]
@@ -84,8 +92,7 @@ class TeamInfoRequest < FRCInfoRequest
       end
 
       if line_value == team_stats[field_number].to_i
-        returned_stats[mini_counter] = team_stats
-        mini_counter += 1
+        returned_stats.concat(team_stats)
       end
 
       start += number_of_fields
@@ -93,10 +100,6 @@ class TeamInfoRequest < FRCInfoRequest
       counter +=  1 
     end 
     # yeah, probably need to handle not finding the value better
-    returned_stats.reject! do |r|
-      r.class == NilClass
-    end
-
     return returned_stats
   end
 #=====================================================================

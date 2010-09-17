@@ -55,6 +55,7 @@ end
 get '/event/:short_name' do |@event|
   request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{@event}&year=2010&event_type=FRC")
   @team_numbers = request.findData('<tr bgcolor="#FFFFFF">', '</table>', /">(.+)<\/a/)
+  $NUM_OF_TEAMS = @team_numbers.length
   @team_urls = create_team_urls(@event, @team_numbers)  
   @team_numbers.map! do |x| 
     x.to_i
@@ -63,14 +64,19 @@ get '/event/:short_name' do |@event|
 end
 
 get '/event/:short_name/team/:team_number' do
-  request = TeamInfoRequest.new('http://www2.usfirst.org/2010comp/events/gt/rankings.html')
-  match_result_request = TeamInfoRequest.new('http://www2.usfirst.org/2010comp/events/GT/matchresults.html')
-  
-  match_result_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
-  request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
+  # schedule_request = TeamListInfoRequest.new("http://www2.usfirst.org/2010comp/events/#{params[:short_name]}/schedulequal.html")
+  request = TeamInfoRequest.new("http://www2.usfirst.org/2010comp/events/#{params[:short_name]}/rankings.html")
+  match = TeamInfoRequest.new("http://www2.usfirst.org/2010comp/events/#{params[:short_name]}/matchresults.html")
 
+  # schedule_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
+  request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
+  match.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
+  
+  # schedule_request.getMatchesPerTeam
+
+  @team_number = params[:team_number]
   @team_stats = request.getStatsByRank(params[:team_number])
-  @team_match_results = match_result.getTeamMatchResults(params[:team_number])
+  @team_match_results = match.getTeamMatchResults(params[:team_number])
 
   haml :team
 end
