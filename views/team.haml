@@ -21,21 +21,20 @@
 %hr
 
 %p= @team_match_results.length
-%p= @team_match_results[0]
 
-- @team_match_results.each do |match_info|
-  - match_info.each do |m|
-    - m.to_a
-    %br
-    %table.pretty
-      %tr
-        %th.match Match #
-        %th Red Alliance
-        %th Blue Alliance
-        %th.score Score
-      %tr
-        %td= m[1]
-        %td= "#{m[2]}, #{m[3]}, #{m[4]}"
-        %td= "#{m[5]}, #{m[6]}, #{m[7]}"
-        %td= "#{m[8]} - #{m[9]}"
+- @team_match_results.reverse.each do |m|
+  -# %p= m
+  %br
+  %table.pretty
+    %tr
+      %th.match Match #
+      %th Red Alliance
+      %th Blue Alliance
+      %th.score Score
+    %tr
+      %td= m[1]
+      %td= "#{m[2]}, #{m[3]}, #{m[4]}"
+      %td= "#{m[5]}, #{m[6]}, #{m[7]}"
+      %td= "#{m[8]} - #{m[9]}"
 
+%p --------------------------------

@@ -23,13 +23,14 @@ class TeamInfoRequest < FRCInfoRequest
 
   def getTeamMatchResults(number)
     number = number.to_i
-    all = []
-    all[0] = cycleThroughMatchResults(2, number, 10)
-    all[1] = cycleThroughMatchResults(3, number, 10)
-    all[2] = cycleThroughMatchResults(4, number, 10)
-    all[3] = cycleThroughMatchResults(5, number, 10)
-    all[4] = cycleThroughMatchResults(6, number, 10)
-    all[5] = cycleThroughMatchResults(7, number, 10)
+    all = cycleThroughMatchResults(2, number, 10)
+    # all[1] = cycleThroughMatchResults(3, number, 10)
+    # all[2] = cycleThroughMatchResults(4, number, 10)
+    # all[3] = cycleThroughMatchResults(5, number, 10)
+    # all[4] = cycleThroughMatchResults(6, number, 10)
+    # all[5] = cycleThroughMatchResults(7, number, 10)
+
+    # foobar = all[0] + all[1] + all[2] + all[3] + all[4] + all[5]
 
     return all
   end
@@ -77,13 +78,23 @@ class TeamInfoRequest < FRCInfoRequest
     while counter <= rows
       team_stats = @stats[start..stop]
 
-      if field_number > 4
-        team_stats.insert(team_stats.length, "Blue")
-      elsif field_number < 4
-        team_stats.insert(team_stats.length, "Red")
-      end
-
-      if line_value == team_stats[field_number].to_i
+      case line_value
+      when team_stats[2].to_i
+        returned_stats[mini_counter] = team_stats
+        mini_counter += 1
+      when team_stats[3].to_i
+        returned_stats[mini_counter] = team_stats
+        mini_counter += 1
+      when team_stats[4].to_i
+        returned_stats[mini_counter] = team_stats
+        mini_counter += 1
+      when team_stats[5].to_i
+        returned_stats[mini_counter] = team_stats
+        mini_counter += 1
+      when team_stats[6].to_i
+        returned_stats[mini_counter] = team_stats
+        mini_counter += 1
+      when team_stats[7].to_i
         returned_stats[mini_counter] = team_stats
         mini_counter += 1
       end
@@ -91,8 +102,9 @@ class TeamInfoRequest < FRCInfoRequest
       start += number_of_fields
       stop += number_of_fields
       counter +=  1 
+
     end 
-    # yeah, probably need to handle not finding the value better
+
     returned_stats.reject! do |r|
       r.class == NilClass
     end
