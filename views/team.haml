@@ -1,3 +1,21 @@
+:javascript
+  $(document).ready(function () {
+    function getPreviousUrl(s) {
+      var sp = s.split('/');
+      var previous_url = sp[0] + '/' + sp[1] + '/' + sp[2];
+      return previous_url;
+    }
+
+
+    var team_number = $('span#hidden-number').html();
+    $('table tr td:contains("' + team_number + '")').css('font-weight', 'bold');
+
+    $('#sidebar-previous').bind('click', function () {
+      alert(document.location.pathname);
+      document.location = getPreviousUrl(document.location.pathname);
+    });
+  });
+
 %h2= "Team #: #{@team_number}"
 %hr
 %table.pretty
@@ -19,11 +37,7 @@
 
 %h2 Match History
 %hr
-
-%p= @team_match_results.length
-
-- @team_match_results.reverse.each do |m|
-  -# %p= m
+- @team_match_results.reverse.each do |match_info|
   %br
   %table.pretty
     %tr
@@ -31,10 +45,10 @@
       %th Red Alliance
       %th Blue Alliance
       %th.score Score
+    
     %tr
-      %td= m[1]
-      %td= "#{m[2]}, #{m[3]}, #{m[4]}"
-      %td= "#{m[5]}, #{m[6]}, #{m[7]}"
-      %td= "#{m[8]} - #{m[9]}"
-
-%p --------------------------------
+      %td= match_info[1]
+      %td.teams= "#{match_info[2]}, #{match_info[3]}, #{match_info[4]}"
+      %td.teams= "#{match_info[5]}, #{match_info[6]}, #{match_info[7]}"
+      %td= "#{match_info[8]} - #{match_info[9]}"
+%span#hidden-number.hidden= "#{@team_number}"

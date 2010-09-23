@@ -8,6 +8,15 @@ body {
   text-align: center;
 }
 
+h2 {
+  font-family: Georgia;
+  font-size: 20px;
+  color: ;
+}
+
+.hidden {
+  display:none;
+}
 
 .shape {
   width: 600px;
@@ -42,17 +51,27 @@ body {
   -moz-border-radius-bottomright: 15px;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
+  margin-bottom: 10px;
 }
 
-table.pretty {
+
+table {
   width: 580px;
   border: #000 solid black;
   font-family: Verdana;
+  font-size: 14px;
+}
+
+table.team-info {
+  font-size: 14px;
+}
+
+table.pretty {
   font-size: 12px;
 }
 
 table.pretty th {
-  width 100px;
+  width: 200px;
   background-color: #99CCCC;
   font-weight: bold;
   color: #333;
@@ -62,8 +81,10 @@ table.pretty th.match, table.pretty th.score {
   width: 70px;
 }
 
-#header {
+table.pretty td {
+}
 
+#header {
 }
 
 #wrapper {
@@ -86,3 +107,9 @@ table.pretty th.match, table.pretty th.score {
   background-color: #FFF;
 }
 
+#sidebar #sidebar-previous, #sidebar-next {
+  width: 55px;
+  height: 20px;
+  float: left;
+  border: thin black solid;
+}
