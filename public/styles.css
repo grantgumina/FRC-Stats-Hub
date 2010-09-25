@@ -54,6 +54,10 @@ h2 {
   margin-bottom: 10px;
 }
 
+.team-input {
+  margin-left: auto;
+  margin-right: auto;
+}
 
 table {
   width: 580px;
@@ -85,6 +89,7 @@ table.pretty td {
 }
 
 #header {
+  margin-left:10px;
 }
 
 #wrapper {
@@ -95,8 +100,8 @@ table.pretty td {
 }
 
 #sidebar {
-  width: 150px;
-  height: 100px;
+  width: 160px;
+  height: 300px;
 
   margin-left:30px;
 
@@ -107,7 +112,7 @@ table.pretty td {
   background-color: #FFF;
 }
 
-#sidebar #sidebar-previous, #sidebar-next {
+#sidebar #sidebar-previous {
   width: 55px;
   height: 20px;
   float: left;

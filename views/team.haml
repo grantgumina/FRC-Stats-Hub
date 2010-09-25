@@ -1,20 +1,22 @@
+= haml(:_team_input_js, :layout => false)
+
 :javascript
   $(document).ready(function () {
-    function getPreviousUrl(s) {
+    var team_number = $('span#hidden-number').html();
+    $('table tr td:contains("' + team_number + '")').css('font-weight', 'bold');
+
+    function getEventUrl(s) {
       var sp = s.split('/');
       var previous_url = sp[0] + '/' + sp[1] + '/' + sp[2];
       return previous_url;
     }
 
-
-    var team_number = $('span#hidden-number').html();
-    $('table tr td:contains("' + team_number + '")').css('font-weight', 'bold');
-
     $('#sidebar-previous').bind('click', function () {
-      alert(document.location.pathname);
-      document.location = getPreviousUrl(document.location.pathname);
+      document.location = getEventUrl(document.location.pathname);
     });
   });
+
+= haml(:_team_input, :layout => false)
 
 %h2= "Team #: #{@team_number}"
 %hr

@@ -1,68 +1,10 @@
 :javascript
   $(document).ready(function () {
-    function checkForEnter(e) {
-      if(e.keyCode == 13) {
-        var team_url;
-        if ($('#team_number_combobox').val() == 'Select...') {
-          team_url = document.location.pathname + '/team/' + $('#team_number_box').val();
-        }
-        else if ($('#team_number_box').val() == 'Enter team number') {
-          team_url = document.location.pathname + '/team/' + $('#team_number_combobox option:selected').text();
-        }
-        document.location.href = team_url;
-      }
-    }
 
-    $('.error').hide();
-
-    $('#team_number_box').focus(function () {
-      $(this).val('');
-      $('#team_number_combobox').val('Select...');
-    });
-
-    $('#team_number_box').blur(function () {
-      if($(this).val() == '') {
-        $(this).val('Enter team number');
-        $('#team_number_combobox').val('Select...');
-      }
-    });
-
-    $('#team_number_combobox').change(function () {
-      $('#team_number_box').val('Enter team number');
-    });
-
-    $('#team_number_combobox').blur(function () {
-      $('#team_number_box').val('Enter team number');
-    });
-
-    $('#team_number_button').bind('click', function () {
-      var team_url;
-      if ($('#team_number_combobox').val() == 'Select...') {
-        team_url = document.location.pathname + '/team/' + $('#team_number_box').val();
-      }
-      else if ($('#team_number_box').val() == 'Enter team number') {
-        team_url = document.location.pathname + '/team/' + $('#team_number_combobox option:selected').text();
-      }
-      document.location.href = team_url;
-    });
-
-    $('#team_number_box').keydown(checkForEnter);
-
-    $('.pressable').keypress(function (e) {
-      var k = e.keyCode || e.which;
-      if(k == 13) {
-        $('#team_number_button').click();
-      }
+    $('#sidebar-previous').bind('click', function () {
+      document.location = '/';
     });
   });
 
-%h3= @event
-.error Please enter a team number.
-%input{:type => 'textbox', :id => 'team_number_box', :value => 'Enter team number'}
-or
-%select{:id => 'team_number_combobox', :class => 'pressable'}
-  %option Select...
-  - @team_numbers.sort!
-  - @team_numbers.each do |i|
-    %option= i
-%input{:id => 'team_number_button', :class => 'pressable', :type => 'button', :value => 'Go'}
+= haml(:_team_input, :layout => false)
+= haml(:_team_input_js, :layout => false)

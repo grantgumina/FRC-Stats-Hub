@@ -1,0 +1,11 @@
+.team_input
+  .error Please choose a team.
+  %h3 Please enter a team number...
+  %input{:type => 'textbox', :id => 'team_number_box', :value => 'Enter team number'}
+  or
+  %select{:id => 'team_number_combobox', :class => 'pressable'}
+    %option Select...
+    - @team_numbers.sort!
+    - @team_numbers.each do |i|
+      %option= i
+  %input{:id => 'team_number_button', :class => 'pressable', :type => 'button', :value => 'Go'}

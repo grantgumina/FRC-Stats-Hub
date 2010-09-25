@@ -4,35 +4,17 @@ class TeamInfoRequest < FRCInfoRequest
 #======================================================================
   # Stats
 #======================================================================
-  # TODO: figure out how to dynamically find the number of matches per team
-  
-  # def getMatchesPerTeam
-  #   number_of_cells = @stats.length
-  #   return matches_per_team = number_of_cells / 8
-  # end
-
   def getStatsByRank(rank)
     rank = rank.to_i
     return cycleThroughStats(0, rank, 6)
   end
 
   def getStatsByTeamNumber(number)
-    number = number.to_i
-    return cycleThroughStats(1, number, 6)
+    return cycleThroughStats(1, number.to_i, 6)
   end
 
   def getTeamMatchResults(number)
-    number = number.to_i
-    all = cycleThroughMatchResults(2, number, 10)
-    # all[1] = cycleThroughMatchResults(3, number, 10)
-    # all[2] = cycleThroughMatchResults(4, number, 10)
-    # all[3] = cycleThroughMatchResults(5, number, 10)
-    # all[4] = cycleThroughMatchResults(6, number, 10)
-    # all[5] = cycleThroughMatchResults(7, number, 10)
-
-    # foobar = all[0] + all[1] + all[2] + all[3] + all[4] + all[5]
-
-    return all
+    return cycleThroughMatchResults(2, number.to_i, 10)
   end
 
 #=====================================================================
@@ -43,9 +25,6 @@ class TeamInfoRequest < FRCInfoRequest
     return number_of_rows
   end
 
-  # cycles through the array of stats. If the line_value you're looking for
-  # is the same as the value in array[field_number] then it
-  # returns the stats.
   def cycleThroughStats(field_number, line_value, number_of_fields)
     rows = getNumberOfRows(number_of_fields)
     start = 0  

@@ -1,0 +1,63 @@
+:javascript
+  $(document).ready(function () {
+
+    function getEventUrl(s) {
+      var sp = s.split('/');
+      var previous_url = sp[0] + '/' + sp[1] + '/' + sp[2];
+      return previous_url;
+    }
+
+    $('.error').hide();
+    
+    $('#team_number_box').focus(function () {
+        $(this).val('');
+        $('#team_number_combobox').val('Select...');
+      });
+
+      $('#team_number_box').blur(function () {
+        if($(this).val() == '') {
+          $(this).val('Enter team number');
+          $('#team_number_combobox').val('Select...');
+        }
+      });
+
+      $('#team_number_combobox').change(function () {
+        $('#team_number_box').val('Enter team number');
+      });
+
+      $('#team_number_combobox').blur(function () {
+        $('#team_number_box').val('Enter team number');
+      });
+
+      $('#team_number_box').keydown(checkForEnter);
+
+     function checkForEnter(e) {
+        if(e.keyCode == 13) {
+          var team_url;
+          if ($('#team_number_box').val() == 'Enter team number') {
+            team_url = getEventUrl(document.location.pathname) + '/team/' + $('#team_number_combobox option:selected').text();
+          }
+          else {
+            team_url = getEventUrl(document.location.pathname) + '/team/' + $('#team_number_box').val();
+          }
+          document.location.href = team_url;
+        }
+      }
+
+    $('#team_number_button').bind('click', function () {
+      var team_url;
+      if ($('#team_number_combobox').val() == 'Select...') {
+        team_url = getEventUrl(document.location.pathname) + '/team/' + $('#team_number_box').val();
+      }
+      else if ($('#team_number_box').val() == 'Enter team number') {
+        team_url = getEventUrl(document.location.pathname) + '/team/' + $('#team_number_combobox option:selected').text();
+      }
+      document.location.href = team_url;
+    });
+      $('.pressable').keypress(function (e) {
+        var k = e.keyCode || e.which;
+        if(k == 13) {
+          $('#team_number_button').click();
+        }
+      });
+    });
