@@ -1,17 +1,28 @@
 html {
   margin-left:auto;
   margin-right:auto;
-  background:#46474C;
+  background-color: #181C21;
 }
 
 body {
   text-align: center;
+  background-color: #181C21;
+}
+
+h2, h3 {
+  font-family: Georgia;
 }
 
 h2 {
-  font-family: Georgia;
   font-size: 20px;
-  color: ;
+  color: #333;
+  margin-top: 40px;
+}
+
+h3 {
+  font-size: 18px;
+  font-style: italic;
+  color: #99CCCC;
 }
 
 .hidden {
@@ -32,7 +43,8 @@ h2 {
   -moz-border-radius-topright: 10px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  background-color: #7DF22B;
+  /* background-color: #99CCCC; */
+  background-color: #DDD;
 }
 
 .content {
@@ -55,13 +67,11 @@ h2 {
 }
 
 .team-input {
-  margin-left: auto;
-  margin-right: auto;
+  text-align: center;
 }
 
 table {
   width: 580px;
-  border: #000 solid black;
   font-family: Verdana;
   font-size: 14px;
 }
@@ -85,10 +95,12 @@ table.pretty th.match, table.pretty th.score {
   width: 70px;
 }
 
-table.pretty td {
+table.pretty td.rank, table.pretty td.rank-heading {
+  
 }
 
 #header {
+  background-color: #FFF;
   margin-left:10px;
 }
 
@@ -113,8 +125,9 @@ table.pretty td {
 }
 
 #sidebar #sidebar-previous {
-  width: 55px;
+  padding-top: 10px;
+  padding-left: 10px;
+  width: 105px;
   height: 20px;
   float: left;
-  border: thin black solid;
 }

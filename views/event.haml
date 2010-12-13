@@ -1,5 +1,8 @@
 :javascript
   $(document).ready(function () {
+    $('#sidebar-previous').removeClass('hidden');
+    $('#sidebar-previous button').html('Choose Event');
+
 
     $('#sidebar-previous').bind('click', function () {
       document.location = '/';

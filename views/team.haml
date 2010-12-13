@@ -2,6 +2,19 @@
 
 :javascript
   $(document).ready(function () {
+    if ($('td.rank').html() <= 10) {
+      $('tr.rank').css('background-color','#94F297');
+      $('td.rank').css('color','#green');
+    }
+    else if ($('td.rank').html() > 10 && $('td.rank').html() <= 20) {
+      $('tr.rank').css('background-color','#FFFF8F');
+      $('td.rank').css('color','#black');
+    }
+    else if ($('td.rank').html() > 20) {
+      $('tr.rank').css('background-color','#FF8F8F');
+      $('td.rank').css('color','red');
+    }
+
     var team_number = $('span#hidden-number').html();
     $('table tr td:contains("' + team_number + '")').css('font-weight', 'bold');
 
@@ -11,19 +24,24 @@
       return previous_url;
     }
 
+    $('#sidebar-previous').removeClass('hidden');
+    $('#sidebar-previous button').html('Choose Team');
+
     $('#sidebar-previous').bind('click', function () {
       document.location = getEventUrl(document.location.pathname);
     });
   });
 
-= haml(:_team_input, :layout => false)
+-# The team selector partial doesn't work on this page.
+-# = haml(:_team_input, :layout => false)
 
 %h2= "Team #: #{@team_number}"
+-# #{@team_stats[0]}"
 %hr
 %table.pretty
-  %tr
+  %tr.rank
     %td Team Rank:
-    %td= @team_stats[0]
+    %td.rank= @team_stats[0]
   %tr
     %td Matches Played:
     %td= @team_stats[2]
