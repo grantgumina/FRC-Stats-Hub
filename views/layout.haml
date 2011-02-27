@@ -2,20 +2,23 @@
 %html
   %head
     %link{:rel => 'stylesheet', :href => '/styles.css'}
+    %link{:rel => 'stylesheet', :href => 'http://fonts.googleapis.com/css?family=Orbitron:400,500,700,900'}
+    %link{:rel => 'stylesheet', :href => 'http://fonts.googleapis.com/css?family=Geo:regular'}
     %script{:type => 'text/javascript', :src => 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'}
     %script{:type => 'text/javascript', :src => 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js'}
-    %title COMETS Robotics Stats Hub
+    %title Stats Hub
 
   %body
-    #header
     #wrapper
-      #sidebar
-        .content
-          #sidebar-previous.hidden
-            %button
-
+      #header
+        %img{:src => '/images/FRCStatsHubHeader.png'}
+        %br
+        %br
+        %h3.tagline An open source project brought to you by FRC team #3357 - COMETS Robotcs!
       .top.shape
       .error
       .content.shape
+        %img{:src => '/images/leftarrow.png', :alt => 'Go Back', :title => 'Go Back', :class => 'goback'}
+        %img{:src => '/images/rightarrow.png', :alt => 'Next', :title => 'Next', :class => 'next'}
         =yield
       .bottom.shape

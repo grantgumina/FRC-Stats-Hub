@@ -1,11 +1,11 @@
 :javascript
   $(document).ready(function () {
-    $('#sidebar-previous').removeClass('hidden');
-    $('#sidebar-previous button').html('Choose Event');
-
-
-    $('#sidebar-previous').bind('click', function () {
+    $('img.goback').bind('click', function () {
       document.location = '/';
+    });
+
+    $('img.next').bind('click', function () {
+      alert('You need to select a team!');
     });
   });
 

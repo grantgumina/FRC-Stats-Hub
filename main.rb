@@ -10,7 +10,7 @@ helpers do
     base_url = '/event/'
     
     event_short_names.map! do |r|
-      r.scan(/2010(.+)/)
+      r.scan(/2011(.+)/)
     end
 
     event_short_names.map! do |r|
@@ -33,27 +33,30 @@ get '/' do
   @event_names = []
   begin
     t1 = Thread.new do
-    req = EventListInfoRequest.new('http://www.thebluealliance.net/tbatv/')
-      @event_names = req.findData('<tr class="table_row0">', '</table>', /title="(.*?)"/)
+    req = EventListInfoRequest.new('http://www.thebluealliance.com/events/')
+      @event_names = req.findData('<ul class="infoList">', '</ul>', /">(.*?)\s</)
     end
 
     t2 = Thread.new do
-    req = EventListInfoRequest.new('http://www.thebluealliance.net/tbatv/')
-      @event_short_names = req.findData('<tr class="table_row0">', '</table>', /event\/(.*?)"/)
+    req = EventListInfoRequest.new('http://www.thebluealliance.com/events/')
+      @event_short_names = req.findData('<ul class="infoList">', '</ul>', /event\/(.*?)"/)
     end
 
     t1.join
     t2.join
+    @event_names.each do |en|
+      en.strip!
+    end
+
     @event_urls = create_event_urls(@event_short_names)
     haml :index 
-
   rescue
     haml :error, :layout => false
   end
 end
 
 get '/event/:short_name' do |@event|
-  request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{@event}&year=2010&event_type=FRC")
+  request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{@event}&year=2011&event_type=FRC")
   @team_numbers = request.findData('<tr bgcolor="#FFFFFF">', '</table>', /">(.+)<\/a/)
   $NUM_OF_TEAMS = @team_numbers.length
   @team_urls = create_team_urls(@event, @team_numbers)  
@@ -65,8 +68,8 @@ end
 
 get '/event/:short_name/team/:team_number' do
   # schedule_request = TeamListInfoRequest.new("http://www2.usfirst.org/2010comp/events/#{params[:short_name]}/schedulequal.html")
-  request = TeamInfoRequest.new("http://www2.usfirst.org/2010comp/events/#{params[:short_name]}/rankings.html")
-  match = TeamInfoRequest.new("http://www2.usfirst.org/2010comp/events/#{params[:short_name]}/matchresults.html")
+  request = TeamInfoRequest.new("http://www2.usfirst.org/2011comp/events/#{params[:short_name]}/rankings.html")
+  match = TeamInfoRequest.new("http://www2.usfirst.org/2011comp/events/#{params[:short_name]}/matchresults.html")
 
   # schedule_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
   request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)

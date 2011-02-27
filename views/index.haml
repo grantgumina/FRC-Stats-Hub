@@ -1,5 +1,13 @@
 :javascript
   $(document).ready(function () {
+    $('img.goback').bind('click', function () {
+      document.location = '/';
+    });
+
+    $('img.next').bind('click', function () {
+      alert('You need to select a regional!');
+    });
+
     $('.error').hide();
     $('#event_go_button').bind('click', function () {
       if ($('#event_combobox').val() == 'Select an event...') {
@@ -11,12 +19,13 @@
     });
   });
 
-%h3 Welcome!
-.error Please select an event.
-%form{:name => 'event_form'}
-  %select{:id => 'event_combobox'} 
-    %option Select an event...
-    - @event_names.sort.each do |e|
-      %option{:value => @event_urls[@event_names.index(e)]}= e
-  %input{:type => 'button', :id => 'event_go_button', :value => 'Go'}
+%h1 Welcome
+.error You did not choose an event.
+#eventselect
+  %form{:name => 'event_form'}
+    %select{:id => 'event_combobox'} 
+      %option Select an event...
+      - @event_names.sort.each do |e|
+        %option{:value => @event_urls[@event_names.index(e)]}= e
+    %input{:type => 'button', :id => 'event_go_button', :value => 'Go'}
 

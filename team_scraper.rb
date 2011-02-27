@@ -1,6 +1,4 @@
 require File.expand_path(File.dirname(__FILE__) + '/frc_scraper.rb')
-class TeamInfoRequest < FRCInfoRequest
-  # global variables
 #======================================================================
   # Stats
 #======================================================================
@@ -86,7 +84,6 @@ class TeamInfoRequest < FRCInfoRequest
 
     returned_stats.reject! do |r|
       r.class == NilClass
-    end
 
     return returned_stats
   end

@@ -2,9 +2,9 @@ require '../team_scraper.rb'
 describe TeamInfoRequest, "A request for team information" do
   @@team_stats = ['38', '2188', '11', '48.00', '12.00','4.00']
   more_stats = ['3',	'2645',	'12',	'87.00',	'26.00',	'12.00']
-  request = TeamInfoRequest.new('http://www2.usfirst.org/2010comp/events/gt/rankings.html')
-  match_result_request = TeamInfoRequest.new('http://www2.usfirst.org/2010comp/events/GT/matchresults.html')
-  num_of_team_request = TeamInfoRequest.new('http://www2.usfirst.org/2010comp/events/GT/schedulequal.html')
+  request = TeamInfoRequest.new('http://www2.usfirst.org/2011comp/events/gt/rankings.html')
+  match_result_request = TeamInfoRequest.new('http://www2.usfirst.org/2011comp/events/GT/matchresults.html')
+  num_of_team_request = TeamInfoRequest.new('http://www2.usfirst.org/2011comp/events/GT/schedulequal.html')
 
   match_result_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
   request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
