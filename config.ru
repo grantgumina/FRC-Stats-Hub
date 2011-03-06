@@ -1,2 +1,2 @@
-require 'beta'
+require 'main'
 run Sinatra:Application
