@@ -11,14 +11,13 @@ h1 {
   font-family: Orbitron;
   font-size: 36px;
   color:#00c900;
-  /* text-shadow: 4px 4px 4px #aaa; */
 }
 
 h2 {
-  font-family: 'Geo', serif;
+  margin-left: 10px;
+  font-family: 'Droid Sans';
   font-size: 38px;
-  color: red;
-  margin-top: 10px;
+  color: white;
 }
 
 h2.subtitle {
@@ -83,20 +82,45 @@ h3 {
 
 .team-input {
   text-align: center;
+  margin-bottom: 30px;
+}
+
+#fields {
+  color: black;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px 0px 15px 0px;
+  width: 400px;
+  
+  -moz-border-radius-topright: 15px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  
+  -moz-border-radius-bottomleft: 15px;
+  -moz-border-radius-bottomright: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+
+  background: white;
 }
 
 table {
+  margin-left: auto;
+  margin-right: auto;
   width: 580px;
-  font-family: Verdana;
-  font-size: 14px;
+  background: white;
 }
 
-table.team-info {
-  font-size: 14px;
+table.team {
+  padding: 5px;
+  font-size: 18px;
+  font-family: 'Droid Sans'
 }
 
 table.pretty {
-  font-size: 12px;
+  font-size: 14px;
+  font-family: 'Verdana';
+  background: white;
 }
 
 table.pretty th {
@@ -113,44 +137,6 @@ table.pretty th.match, table.pretty th.score {
 table.pretty td.rank, table.pretty td.rank-heading {
   
 }
-
-/* #header { */
-/*   background-color: #0f1923; */
-/* } */
-
-/* #header #banner { */
-/*   width: 640px; */
-/*   margin-left: auto; */
-/*   margin-right: auto; */
-/* } */
-/*  */
-/* #header #banner img { */
-/* } */
-
-/* #topmenu { */
-/*   width: 300px; */
-/*   height: 30px; */
-/*   margin-top: 40px; */
-/*   margin-left: 0px; */
-/*   float: right; */
-/* } */
-/*  */
-/* #topmenu ul { */
-/*   list-style: none; */
-/* } */
-/*  */
-/* #topmenu ul li { */
-/*   display: inline; */
-/*   margin-left: 10px; */
-/*   padding: 5px 5px 5px 5px; */
-/*   background: #39414a; */
-/* } */
-/*  */
-/* #topmenu ul li a { */
-/*   text-decoration: none; */
-/*   color: white; */
-/* } */
-
 
 #wrapper {
   width:650px;

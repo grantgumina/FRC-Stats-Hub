@@ -24,36 +24,40 @@
       return previous_url;
     }
 
-    $('#sidebar-previous').removeClass('hidden');
-    $('#sidebar-previous button').html('Choose Team');
-
-    $('#sidebar-previous').bind('click', function () {
+    $('.goback').bind('click', function () {
       document.location = getEventUrl(document.location.pathname);
     });
   });
 
--# The team selector partial doesn't work on this page.
--# = haml(:_team_input, :layout => false)
+= haml(:_team_input, :layout => false)
+= haml(:_team_input_js, :layout => false)
 
 %h2= "Team #: #{@team_number}"
--# #{@team_stats[0]}"
 %hr
-%table.pretty
+%table.team
   %tr.rank
     %td Team Rank:
     %td.rank= @team_stats[0]
   %tr
-    %td Matches Played:
+    %td Wins:
     %td= @team_stats[2]
   %tr
-    %td Seeding Score:
+    %td Losses:
     %td= @team_stats[3]
   %tr
-    %td Coopertition Bonus:
+    %td Ties:
     %td= @team_stats[4]
   %tr
-    %td Hanging Points:
+    %td Matches Played:
     %td= @team_stats[5]
+
+  %tr
+    %td Qualifying Score:
+    %td= @team_stats[6]
+
+  %tr
+    %td Ranking Score:
+    %td= @team_stats[7]
 
 %h2 Match History
 %hr
