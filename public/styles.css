@@ -53,6 +53,7 @@ h3 {
 .content {
   width: 640px;
   min-height: 400px;
+  background: -moz-linear-gradient(100% 100% 90deg, #B5BDC8, #0f1923);
   background: -webkit-gradient(linear, 0% 0%, 0% 90%, from(#0f1923), to(#B5BDC8)) no-repeat;
 }
 
