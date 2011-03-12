@@ -1,5 +1,7 @@
 :javascript
   $(document).ready(function () {
+    $('#overall-rankings').tablesorter();
+
     $('img.goback').bind('click', function () {
       document.location = '/';
     });
@@ -11,3 +13,4 @@
 
 = haml(:_team_input, :layout => false)
 = haml(:_team_input_js, :layout => false)
+= haml(:_overall_rankings, :layout => false)

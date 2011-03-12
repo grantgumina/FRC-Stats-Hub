@@ -1,8 +1,7 @@
 require '../team_scraper.rb'
 describe TeamInfoRequest, "A request for team information" do
-  @@team_stats = ['3', '1918', '6', '1', '0', '7', '12.00', '10.14']
+  @@team_stats = ['1', '1918', '11', '1', '0', '12', '22.00', '15.75']
 
-  more_stats = ['3',	'2645',	'12',	'87.00',	'26.00',	'12.00']
   request = TeamInfoRequest.new('http://www2.usfirst.org/2011comp/events/gt/rankings.html')
   match_result_request = TeamInfoRequest.new('http://www2.usfirst.org/2011comp/events/GT/matchresults.html')
   num_of_team_request = TeamInfoRequest.new('http://www2.usfirst.org/2011comp/events/GT/schedulequal.html')
@@ -13,7 +12,7 @@ describe TeamInfoRequest, "A request for team information" do
 
 #----------------------------------------------------------------------------
   it "should return team's stats when given a rank" do
-    request.getStatsByRank(3).should == @@team_stats
+    request.getStatsByRank(1).should == @@team_stats
   end
 
   it "should return team stats when given a team's number" do

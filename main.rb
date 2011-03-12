@@ -58,16 +58,26 @@ end
 get '/event/:short_name' do |@event|
   request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{@event}&year=2011&event_type=FRC")
   @team_numbers = request.findData('<tr bgcolor="#FFFFFF">', '</table>', /">(.+)<\/a/)
-  $NUM_OF_TEAMS = @team_numbers.length
+  
+  ranking_request = TeamInfoRequest.new("http://www2.usfirst.org/2011comp/events/#{@event}/rankings.html")
+  ranking_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
+
+  @results = []
+
   @team_urls = create_team_urls(@event, @team_numbers)  
   @team_numbers.map! do |x| 
     x.to_i
   end
+
+  @team_numbers.length.times do |rank|
+    rank += 1
+    @results.push(ranking_request.getStatsByRank(rank))
+  end
+
   haml :event
 end
 
 get '/event/:short_name/team/:team_number' do
-
   tn_request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{params[:short_name]}&year=2011&event_type=FRC")
   @team_numbers = tn_request.findData('<tr bgcolor="#FFFFFF">', '</table>', /">(.+)<\/a/)
   @team_numbers.map! do |x| 

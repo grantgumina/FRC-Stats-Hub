@@ -1,0 +1,16 @@
+%h2 Overall Rankings
+%table{:id => 'overall-rankings', :class => 'tablesorter'}
+  %thead
+    %tr
+      %th Rank
+      %th Team Number
+      %th Wins
+      %th Losses
+      %th Ties
+      %th Played
+      %th QS
+      %th RS
+  - @results.each do |r|
+    %tr
+      - r.each do |i|
+        %td= i
