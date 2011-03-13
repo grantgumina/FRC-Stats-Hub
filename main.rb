@@ -35,6 +35,11 @@ get '/' do
     t1 = Thread.new do
     req = EventListInfoRequest.new('http://www.thebluealliance.com/events/')
       @event_names = req.findData('<ul class="infoList">', '</ul>', /">(.*?)\s</)
+      # @event_names = req.findData('<ul class="infoList">', '</ul>', /">(.*)</)
+      @event_names.each do |en|
+        # en.gsub!(/<span(.*?)>/,'')
+        en.strip!
+      end
     end
 
     t2 = Thread.new do
@@ -44,9 +49,6 @@ get '/' do
 
     t1.join
     t2.join
-    @event_names.each do |en|
-      en.strip!
-    end
 
     @event_urls = create_event_urls(@event_short_names)
     haml :index 
