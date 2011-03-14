@@ -5,6 +5,8 @@ require 'event_list_scraper.rb'
 require 'team_scraper.rb'
 require 'team_list_scraper.rb'
 
+use Rack::GoogleAnalytics, :tracker => 'UA-10166500-4'
+
 helpers do 
   def create_event_urls(event_short_names)
     base_url = '/event/'

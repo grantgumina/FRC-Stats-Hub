@@ -1,4 +1,5 @@
 *.swp
 *.swo
+config.ru
 data/database.yml
 
