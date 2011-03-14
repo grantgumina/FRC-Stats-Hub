@@ -2,15 +2,21 @@
   $(document).ready(function () {
     $('#overall-rankings').tablesorter();
 
-    $('img.goback').bind('click', function () {
+    $('.select-event').bind('click', function () {
       document.location = '/';
     });
 
-    $('img.next').bind('click', function () {
-      alert('You need to select a team!');
+    $('.select-team').bind('click', function () {
+      document.location.reload();
     });
   });
 
+#breadcrumbs
+  %ul
+    %li
+      %a{:class => 'select-event'} Select Event >>
+    %li 
+      %a{:class => ['select-team', 'current-crumb']} Select Team
 = haml(:_team_input, :layout => false)
 = haml(:_team_input_js, :layout => false)
 = haml(:_overall_rankings, :layout => false)

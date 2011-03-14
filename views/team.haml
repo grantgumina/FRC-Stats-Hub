@@ -2,6 +2,18 @@
 
 :javascript
   $(document).ready(function () {
+    $('.select-event').bind('click', function () {
+      document.location = '/';
+    });
+
+    $('.select-team').bind('click', function () {
+      document.location = getEventUrl(document.location.pathname);
+    });
+    
+    $('.view-team').bind('click', function () {
+      document.location.reload();
+    });
+
     if ($('td.rank').html() <= 10) {
       $('tr.rank').css('background-color','#94F297');
       $('td.rank').css('color','#green');
@@ -23,11 +35,16 @@
       var previous_url = sp[0] + '/' + sp[1] + '/' + sp[2];
       return previous_url;
     }
-
-    $('.goback').bind('click', function () {
-      document.location = getEventUrl(document.location.pathname);
-    });
   });
+
+#breadcrumbs
+  %ul
+    %li
+      %a{:class => 'select-event'} Select Event >>
+    %li 
+      %a{:class => 'select-team'} Select Team >>
+    %li 
+      %a{:class => ['view-team', 'current-crumb']} View Team
 
 = haml(:_team_input, :layout => false)
 = haml(:_team_input_js, :layout => false)
@@ -65,12 +82,20 @@
   %br
   %table.pretty
     %tr
+      -# %th.win-icon
       %th.match Match #
       %th Red Alliance
       %th Blue Alliance
       %th.score Score
     
     %tr
+      -# - if (match_info[8] > match_info[9]) && (match_info[2..4].include?(@team_number))
+      -#   %td RED WIN
+      -# - elsif (match_info[8] < match_info[9]) && (match_info[5..7].include?(@team_number))
+      -#   %td BLUE WIN
+      -# - else
+      -#   %td
+      -# %td
       %td= match_info[1]
       %td.teams= "#{match_info[2]}, #{match_info[3]}, #{match_info[4]}"
       %td.teams= "#{match_info[5]}, #{match_info[6]}, #{match_info[7]}"
