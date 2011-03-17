@@ -1,0 +1,20 @@
+:javascript
+  $(document).ready(function () {
+    $('img.goback').bind('click', function () {
+      document.location = '/';
+    });
+
+    $('img.next').bind('click', function () {
+      alert('You need to select a regional!');
+    });
+
+    $('.error').hide();
+    $('#event_go_button').bind('click', function () {
+      if ($('#event_combobox').val() == 'Select an event...') {
+        $('.error').show();
+      }
+      else {
+        window.location.href = document.event_form.event_combobox.options[document.event_form.event_combobox.selectedIndex].value;
+      }
+    });
+  });
