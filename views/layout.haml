@@ -19,7 +19,8 @@
   %body
     #wrapper
       #header
-        %img{:src => '/images/FRCStatsHubHeader.png'}
+        %a{:href => '/', :alt => 'StatsHub Homepage'}
+          %img{:src => '/images/FRCStatsHubHeader.png'}
         %br
         %br
         %h3.tagline An open source project brought to you by FRC team #3357 - COMETS Robotics!
@@ -28,3 +29,11 @@
       .content.shape
         =yield
       .bottom.shape
+      -# #footer
+      -#   %ul
+      -#     %li
+      -#       %a COMETS Homepage
+      -#     %li
+      -#       %a About StatsHub
+      -#     %li
+      -#       %a Download StatsHub
