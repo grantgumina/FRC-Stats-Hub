@@ -42,6 +42,7 @@ get '/' do
         # en.gsub!(/<span(.*?)>/,'')
         en.strip!
       end
+      @event_names.delete("Oklahoma City, OK")
     end
 
     t2 = Thread.new do
@@ -53,6 +54,7 @@ get '/' do
     t2.join
 
     @event_urls = create_event_urls(@event_short_names)
+    puts @event_urls
     haml :index 
   rescue
     haml :error, :layout => false
@@ -60,25 +62,29 @@ get '/' do
 end
 
 get '/event/:short_name' do |@event|
-  request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{@event}&year=2011&event_type=FRC")
-  @team_numbers = request.findData('<tr bgcolor="#FFFFFF">', '</table>', /">(.+)<\/a/)
-  
-  ranking_request = TeamInfoRequest.new("http://www2.usfirst.org/2011comp/events/#{@event}/rankings.html")
-  ranking_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
+  begin
+    request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{@event}&year=2011&event_type=FRC")
+    @team_numbers = request.findData('<tr bgcolor="#FFFFFF">', '</table>', /">(.+)<\/a/)
+    
+    ranking_request = TeamInfoRequest.new("http://www2.usfirst.org/2011comp/events/#{@event}/rankings.html")
+    ranking_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
 
-  @results = []
+    @results = []
 
-  @team_urls = create_team_urls(@event, @team_numbers)  
-  @team_numbers.map! do |x| 
-    x.to_i
+    @team_urls = create_team_urls(@event, @team_numbers)  
+    @team_numbers.map! do |x| 
+      x.to_i
+    end
+
+    @team_numbers.length.times do |rank|
+      rank += 1
+      @results.push(ranking_request.getStatsByRank(rank))
+    end
+    haml :event
+  rescue
+    haml :error 
   end
 
-  @team_numbers.length.times do |rank|
-    rank += 1
-    @results.push(ranking_request.getStatsByRank(rank))
-  end
-
-  haml :event
 end
 
 get '/event/:short_name/team/:team_number' do

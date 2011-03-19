@@ -61,6 +61,20 @@ h3 {
   color: #617370;
 }
 
+p.error {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  font-family: 'Droid Sans';
+  color: red;
+}
+
+a.error {
+  margin-left: 275px;
+  font-family: 'Droid Sans';
+  color: white;
+}
+
 .bottom {
   height: 30px;
   padding: 0px 0px 0px 40px;
