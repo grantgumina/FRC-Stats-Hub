@@ -98,7 +98,7 @@ get '/event/:short_name/team/:team_number' do
   match = TeamInfoRequest.new("http://www2.usfirst.org/2011comp/events/#{params[:short_name]}/matchresults.html")
 
   request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
-  match.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
+  match.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.*?)</)
 
   @team_number = params[:team_number]
   @team_stats = request.getStatsByTeamNumber(params[:team_number])
