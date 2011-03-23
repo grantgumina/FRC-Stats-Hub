@@ -27,10 +27,7 @@ class TeamInfoRequest < FRCInfoRequest
       while counter <= rows
         team_stats = @stats[start..stop]
         team_stats.each do |l|
-          if l == nil
-            puts "STOP"
-            break
-          end
+          puts l
         end
         start += number_of_fields
         stop += number_of_fields

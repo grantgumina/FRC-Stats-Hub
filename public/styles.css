@@ -145,12 +145,23 @@ table.pretty th {
   color: #333;
 }
 
-table.pretty th.win-icon, table.pretty th.match, table.pretty th.score {
+table.pretty th.match, table.pretty th.score {
   width: 70px;
+}
+table.pretty th.win-icon  {
+  width: 40px;
 }
 
 table.pretty td.rank, table.pretty td.rank-heading {
-  
+}
+
+table.pretty td {
+  text-align: center;
+}
+
+table.event-info {
+  border-top: 2px solid #CDCDCD;
+  padding-left: 5px;
 }
 
 table.tablesorter {

@@ -2,7 +2,7 @@
   %form{:name => 'event_form'}
     %select{:id => 'event_combobox'} 
       %option Select an event...
-      - @event_names.each do |e|
+      - @event_names.sort.each do |e|
         %option{:value => @event_urls[@event_names.index(e)]}= e
       - puts @event_names
     %input{:type => 'button', :id => 'event_go_button', :value => 'Go'}

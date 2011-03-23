@@ -75,27 +75,34 @@
   %tr
     %td Ranking Score:
     %td= @team_stats[7]
+-# 
+-# %table.event-info
+-#   %tr
+-#     %td Current Match:
+-#   %tr
+-#     %td On Deck in:
 
-%h2 Match History
+%h2 Matches:
 %hr
 - @team_match_results.reverse.each do |match_info|
   %br
   %table.pretty
     %tr
-      -# %th.win-icon
+      %th.win-icon
       %th.match Match #
       %th Red Alliance
       %th Blue Alliance
       %th.score Score
     
     %tr
-      -# - if (match_info[8] > match_info[9]) && (match_info[2..4].include?(@team_number))
-      -#   %td RED WIN
-      -# - elsif (match_info[8] < match_info[9]) && (match_info[5..7].include?(@team_number))
-      -#   %td BLUE WIN
-      -# - else
-      -#   %td
-      -# %td
+      - if (match_info[8].to_i > match_info[9].to_i) && (match_info[2..4].include?(@team_number))
+        %td 
+          %img{:src => '/images/smiley.png', :alt => 'WIN'}
+      - elsif (match_info[8].to_i < match_info[9].to_i) && (match_info[5..7].include?(@team_number))
+        %td
+          %img{:src => '/images/smiley.png', :alt => 'WIN'}
+      - else
+        %td
       %td= match_info[1]
       %td.teams= "#{match_info[2]}, #{match_info[3]}, #{match_info[4]}"
       %td.teams= "#{match_info[5]}, #{match_info[6]}, #{match_info[7]}"
