@@ -1,4 +1,5 @@
 = haml(:_team_input_js, :layout => false)
+= haml(:_overall_rankings_team_page_js, :layout => false)
 
 :javascript
   $(document).ready(function () {
@@ -48,63 +49,57 @@
 
 = haml(:_team_input, :layout => false)
 = haml(:_team_input_js, :layout => false)
+#overall-rankings
+  = haml(:_overall_rankings, :layout => false)
 
-%h2= "Team: ##{@team_number}"
-%hr
-%table.team
-  %tr.rank
-    %td Team Rank:
-    %td.rank= @team_stats[0]
-  %tr
-    %td Wins:
-    %td= @team_stats[2]
-  %tr
-    %td Losses:
-    %td= @team_stats[3]
-  %tr
-    %td Ties:
-    %td= @team_stats[4]
-  %tr
-    %td Matches Played:
-    %td= @team_stats[5]
-
-  %tr
-    %td Qualifying Score:
-    %td= @team_stats[6]
-
-  %tr
-    %td Ranking Score:
-    %td= @team_stats[7]
--# 
--# %table.event-info
--#   %tr
--#     %td Current Match:
--#   %tr
--#     %td On Deck in:
-
-%h2 Matches:
-%hr
-- @team_match_results.reverse.each do |match_info|
-  %br
-  %table.pretty
+#team-rankings
+  %h2= "Team: ##{@team_number}"
+  %table.team
+    %tr.rank
+      %td Team Rank:
+      %td.rank= @team_stats[0]
     %tr
-      %th.win-icon
-      %th.match Match #
-      %th Red Alliance
-      %th Blue Alliance
-      %th.score Score
-    
+      %td Wins:
+      %td= @team_stats[2]
     %tr
-      - if (match_info[8].to_i > match_info[9].to_i) && (match_info[2..4].include?(@team_number))
-        %td 
-          %img{:src => '/images/smiley.png', :alt => 'WIN'}
-      - elsif (match_info[8].to_i < match_info[9].to_i) && (match_info[5..7].include?(@team_number))
-        %td
-          %img{:src => '/images/smiley.png', :alt => 'WIN'}
-      - else
-        %td
-      %td= match_info[1]
-      %td.teams= "#{match_info[2]}, #{match_info[3]}, #{match_info[4]}"
-      %td.teams= "#{match_info[5]}, #{match_info[6]}, #{match_info[7]}"
-      %td= "#{match_info[8]} - #{match_info[9]}"
+      %td Losses:
+      %td= @team_stats[3]
+    %tr
+      %td Ties:
+      %td= @team_stats[4]
+    %tr
+      %td Matches Played:
+      %td= @team_stats[5]
+
+    %tr
+      %td Qualifying Score:
+      %td= @team_stats[6]
+
+    %tr
+      %td Ranking Score:
+      %td= @team_stats[7]
+
+  %h2 Matches:
+  - @team_match_results.reverse.each do |match_info|
+    %table.pretty
+      %tr
+        %th.win-icon
+        %th.match Match #
+        %th Red Alliance
+        %th Blue Alliance
+        %th.score Score
+      
+      %tr
+        - if (match_info[8].to_i > match_info[9].to_i) && (match_info[2..4].include?(@team_number))
+          %td 
+            %img{:src => '/images/smiley.png', :alt => 'WIN'}
+        - elsif (match_info[8].to_i < match_info[9].to_i) && (match_info[5..7].include?(@team_number))
+          %td
+            %img{:src => '/images/smiley.png', :alt => 'WIN'}
+        - else
+          %td
+        %td= match_info[1]
+        %td.teams= "#{match_info[2]}, #{match_info[3]}, #{match_info[4]}"
+        %td.teams= "#{match_info[5]}, #{match_info[6]}, #{match_info[7]}"
+        %td= "#{match_info[8]} - #{match_info[9]}"
 %span#hidden-number.hidden= "#{@team_number}"

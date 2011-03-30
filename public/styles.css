@@ -36,13 +36,13 @@ h3 {
 }
 
 .shape {
-  width: 600px;
+  width: 1000px;
   float: left;
   background-color: #FFF;
 }
 
 .top {
-  padding: 15px 0px 0px 40px;
+  padding: 15px 0px 0px 0px;
   background-color: #0f1923;
   -moz-border-radius-topleft: 15px;
   -moz-border-radius-topright: 15px;
@@ -51,7 +51,6 @@ h3 {
 }
 
 .content {
-  width: 640px;
   min-height: 400px;
   background: -moz-linear-gradient(100% 100% 90deg, #B5BDC8, #0f1923);
   background: -webkit-gradient(linear, 0% 0%, 0% 90%, from(#0f1923), to(#B5BDC8)) no-repeat;
@@ -122,9 +121,9 @@ a.error {
 table {
   margin-left: auto;
   margin-right: auto;
-  width: 580px;
   background: white;
 	font-family:arial;
+  width: 100%;
 }
 
 table.team {
@@ -135,6 +134,7 @@ table.team {
 table.pretty {
   font-size: 14px;
   background: white;
+  margin-bottom: 20px;
 }
 
 table.pretty th {
@@ -216,7 +216,7 @@ table.tablesorter tbody td.team-number-link:hover {
 }
 
 #wrapper {
-  width:650px;
+  width:1000px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -257,7 +257,18 @@ img.next {
 }
 
 #eventselect {
-  margin-left: 100px;
+  margin-left: 300px;
+}
+
+#overall-rankings {
+  float: left;
+  width: 500px;
+}
+
+#team-rankings {
+  float:right;
+  width: 450px;
+  margin-right: 20px;
 }
 
 #pagebreak {

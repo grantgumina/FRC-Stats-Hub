@@ -1,13 +1,5 @@
-:javascript
-  $(document).ready(function () {
-    $('.team-number-link').bind('click', function () {
-      document.location.href = document.location.pathname + '/team/' + $(this).html();
-    });
-  });
-
-
 %h2 Overall Rankings
-%table{:id => 'overall-rankings', :class => 'tablesorter'}
+%table{:id => 'rankings', :class => 'tablesorter'}
   %thead
     %tr
       %th Rank
