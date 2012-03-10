@@ -4,15 +4,15 @@ class TeamInfoRequest < FRCInfoRequest
     # Stats
   #======================================================================
     def getStatsByRank(rank)
-      return cycleThroughStats(0, rank.to_i, 8)
+      return cycleThroughStats(0, rank.to_i, 10)
     end
 
     def getStatsByTeamNumber(number)
-      return cycleThroughStats(1, number.to_i, 8)
+      return cycleThroughStats(1, number.to_i, 10)
     end
 
     def getTeamMatchResults(number)
-      return cycleThroughMatchResults(2, number.to_i, 10)
+      return cycleThroughMatchResults(1, number.to_i, 10)
     end
 
     def getCurrentMatch
@@ -36,20 +36,6 @@ class TeamInfoRequest < FRCInfoRequest
         stop += number_of_fields
       end
 
-      #change to while current value not nil ????
-      # while counter <= rows
-      #   team_stats = @stats[start..stop]
-
-      #   start += number_of_fields
-      #   stop += number_of_fields
-      #   counter +=  1 
-      # end 
-
-      # returned_stats.reject! do |r|
-      #   r.class == NilClass
-      # end
-
-      # return returned_stats
     end
 
   #=====================================================================

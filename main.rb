@@ -1,23 +1,19 @@
 require 'rubygems'
 require 'sinatra'
+require 'haml'
 require 'frc_scraper.rb'
 require 'event_list_scraper.rb'
 require 'team_scraper.rb'
 require 'team_list_scraper.rb'
 
-# use Rack::GoogleAnalytics, :tracker => 'UA-10166500-4'
-
 helpers do 
   def create_event_urls(event_short_names)
     base_url = '/event/'
-    
-    event_short_names.map! do |r|
-      r.scan(/2011(.+)/)
-    end
 
     event_short_names.map! do |r|
       r = base_url + r.to_s
     end
+			
     return event_short_names
   end
 
@@ -34,24 +30,12 @@ get '/' do
   @event_short_names = []
   @event_names = []
   begin
-    t1 = Thread.new do
-    req = EventListInfoRequest.new('http://www.thebluealliance.com/events/')
-      @event_names = req.findData('<ul class="infoList">', '</ul>', /">(.*?)\s</)
-      @event_names.each do |en|
-        en.strip!
-      end
-      @event_names.delete("Oklahoma City, OK")
-    end
-
-    t2 = Thread.new do
-    req = EventListInfoRequest.new('http://www.thebluealliance.com/events/')
-      @event_short_names = req.findData('<ul class="infoList">', '</ul>', /event\/(.*?)"/)
-    end
-
-    t1.join
-    t2.join
-
+	req = EventListInfoRequest.new('http://www.thebluealliance.com/events/')
+		@event_data = req.findData('<ul class="infoList">', '</ul>', /\/2012(.*?)">(.*?)</)
+		@event_short_names = @event_data.values_at(* @event_data.each_index.select {|e| e.even?})
+		@event_names = @event_data.values_at(* @event_data.each_index.select {|e| e.odd?})
     @event_urls = create_event_urls(@event_short_names)
+
     haml :index 
   rescue
     haml :error, :layout => false
@@ -60,10 +44,10 @@ end
 
 get '/event/:short_name' do |@event|
   begin
-    request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{@event}&year=2011&event_type=FRC")
+    request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{@event}&year=2012&event_type=FRC")
     @team_numbers = request.findData('<tr bgcolor="#FFFFFF">', '</table>', /">(.+)<\/a/)
-    
-    ranking_request = TeamInfoRequest.new("http://www2.usfirst.org/2011comp/events/#{@event}/rankings.html")
+
+    ranking_request = TeamInfoRequest.new("http://www2.usfirst.org/2012comp/events/#{@event}/rankings.html")
     ranking_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
 
     @results = []
@@ -86,20 +70,21 @@ end
 
 get '/event/:short_name/team/:team_number' do
   begin
-    tn_request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{params[:short_name]}&year=2011&event_type=FRC")
+    tn_request = TeamListInfoRequest.new("https://my.usfirst.org/myarea/index.lasso?page=teamlist&menu=false&event=#{params[:short_name]}&year=2012&event_type=FRC")
     @team_numbers = tn_request.findData('<tr bgcolor="#FFFFFF">', '</table>', /">(.+)<\/a/)
     @team_numbers.map! do |x| 
       x.to_i
     end
 
-    ranking_request = TeamInfoRequest.new("http://www2.usfirst.org/2011comp/events/#{params[:short_name]}/rankings.html")
-    match_request = TeamInfoRequest.new("http://www2.usfirst.org/2011comp/events/#{params[:short_name]}/matchresults.html")
+    ranking_request = TeamInfoRequest.new("http://www2.usfirst.org/2012comp/events/#{params[:short_name]}/rankings.html")
+    match_request = TeamInfoRequest.new("http://www2.usfirst.org/2012comp/events/#{params[:short_name]}/matchresults.html")
 
     ranking_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.+)</)
     match_request.findData('<TR style="background-color:#FFFFFF;" >', '</table>', />(.*?)</)
 
     @team_number = params[:team_number]
     @team_stats = ranking_request.getStatsByTeamNumber(params[:team_number])
+
     @team_match_results = match_request.getTeamMatchResults(params[:team_number])
     
     @results = []
@@ -109,7 +94,6 @@ get '/event/:short_name/team/:team_number' do
       rank += 1
       @results.push(ranking_request.getStatsByRank(rank))
     end
-
 
     haml :team
   rescue

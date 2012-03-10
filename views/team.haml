@@ -59,26 +59,29 @@
       %td Team Rank:
       %td.rank= @team_stats[0]
     %tr
-      %td Wins:
+      %td QS:
       %td= @team_stats[2]
     %tr
-      %td Losses:
+      %td HP:
       %td= @team_stats[3]
     %tr
-      %td Ties:
+      %td BP:
       %td= @team_stats[4]
     %tr
-      %td Matches Played:
+      %td TP:
       %td= @team_stats[5]
-
     %tr
-      %td Qualifying Score:
+      %td CP:
       %td= @team_stats[6]
-
     %tr
-      %td Ranking Score:
+      %td W-L-T:
       %td= @team_stats[7]
-
+    %tr
+      %td DQ:
+      %td= @team_stats[8]
+    %tr
+      %td Matches Played:
+      %td= @team_stats[9]
   %h2 Matches:
   - @team_match_results.reverse.each do |match_info|
     %table.pretty
